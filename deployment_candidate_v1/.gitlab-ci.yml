@@ -1,0 +1,18 @@
+stages:
+  - validate
+
+frontend_build:
+  stage: validate
+  image: node:20
+  script:
+    - node deployment_candidate_v1/build-netlify.mjs
+  artifacts:
+    paths:
+      - deployment_candidate_v1/frontend/dist
+    expire_in: 1 day
+
+backend_syntax:
+  stage: validate
+  image: python:3.11
+  script:
+    - python -m py_compile deployment_candidate_v1/external_backend/*.py

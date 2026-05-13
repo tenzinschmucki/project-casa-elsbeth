@@ -1,0 +1,13 @@
+.DS_Store
+.venv/
+__pycache__/
+*.pyc
+_snapshots/
+
+external_backend/bookings.db
+external_backend/data/*.db
+deployment_candidate_v1/external_backend/data/*.db
+iphone-redesign-v1/external_backend/data/*.db
+smartphone_redesign-v2/external_backend/data/*.db
+
+deployment_candidate_v1/frontend/dist/

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Casa Elsbeth Admin</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="page-header">
+    <div class="page-width page-header-inner">
+      <div>
+        <p class="eyebrow">Project Casa Elsbeth</p>
+        <h1>Admin Configs</h1>
+        <p class="subtitle">Simple admin page for groups, approval rules, areas, users, and your own password.</p>
+        <p class="small-text"><a href="index.html">Back to calendar</a></p>
+      </div>
+
+      <div class="header-status">
+        <p id="admin-session-text">Not logged in.</p>
+        <p id="admin-mode-text" class="small-text">Admin access required.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-width page-main admin-page-main">
+    <noscript>
+      <p class="message-box message-error">This page needs JavaScript.</p>
+    </noscript>
+
+    <div id="admin-message-box" class="message-box hidden" role="status" aria-live="polite"></div>
+
+    <div class="admin-layout">
+      <section class="panel" id="admin-login-panel">
+        <h2>Admin Login</h2>
+        <p class="small-text">Log in with an admin account to access config tools.</p>
+        <form id="admin-login-form">
+          <div class="form-row">
+            <label for="admin-username">Username</label>
+            <input id="admin-username" name="admin-username" type="text" required>
+          </div>
+          <div class="form-row">
+            <label for="admin-password">Password</label>
+            <input id="admin-password" name="admin-password" type="password" required>
+          </div>
+          <div class="button-row">
+            <button type="submit">Log in</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel hidden" id="admin-account-panel">
+        <div class="panel-header">
+          <div>
+            <h2>Account</h2>
+            <p class="small-text">Change your own password here.</p>
+          </div>
+          <button id="admin-logout-button" type="button" class="secondary-button">Log out</button>
+        </div>
+        <form id="admin-password-form">
+          <div class="form-row">
+            <label for="admin-current-password">Current password</label>
+            <input id="admin-current-password" name="admin-current-password" type="password" required>
+          </div>
+          <div class="form-row">
+            <label for="admin-new-password">New password</label>
+            <input id="admin-new-password" name="admin-new-password" type="password" minlength="6" required>
+          </div>
+          <div class="button-row">
+            <button type="submit">Update password</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel hidden" id="admin-groups-panel">
+        <h2>Groups</h2>
+        <p class="small-text">Each normal user belongs to exactly one group. Approval-required groups are global.</p>
+        <div id="admin-groups-list" class="config-list">
+          <p class="empty-state">Loading groups...</p>
+        </div>
+        <form id="admin-new-group-form" class="config-form">
+          <div class="form-row">
+            <label for="admin-new-group-name">New group name</label>
+            <input id="admin-new-group-name" name="admin-new-group-name" type="text" maxlength="80" required>
+          </div>
+          <div class="form-row">
+            <label for="admin-new-group-description">Description</label>
+            <textarea id="admin-new-group-description" name="admin-new-group-description" rows="2" maxlength="200"></textarea>
+          </div>
+          <div class="form-row checkbox-row">
+            <label><input id="admin-new-group-can-approve" name="admin-new-group-can-approve" type="checkbox"> Approval group</label>
+          </div>
+          <div class="form-row checkbox-row">
+            <label><input id="admin-new-group-required" name="admin-new-group-required" type="checkbox"> Required for approval</label>
+          </div>
+          <div class="button-row">
+            <button type="submit">Add group</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel hidden" id="admin-configs-panel">
+        <h2>Areas</h2>
+        <div id="admin-areas-list" class="config-list">
+          <p class="empty-state">Loading areas...</p>
+        </div>
+        <form id="admin-new-area-form" class="config-form">
+          <div class="form-row">
+            <label for="admin-new-area-name">New area name</label>
+            <input id="admin-new-area-name" name="admin-new-area-name" type="text" maxlength="80" required>
+          </div>
+          <div class="form-row">
+            <label for="admin-new-area-description">Description</label>
+            <textarea id="admin-new-area-description" name="admin-new-area-description" rows="2" maxlength="200"></textarea>
+          </div>
+          <div class="button-row">
+            <button type="submit">Add area</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel hidden" id="admin-users-panel">
+        <h2>Users</h2>
+        <p class="small-text">Admins can create users, attach them to a group, change their role, set a fresh password, or delete the account.</p>
+        <div id="admin-users-list" class="config-list">
+          <p class="empty-state">Loading users...</p>
+        </div>
+        <form id="admin-new-user-form" class="config-form">
+          <div class="form-row">
+            <label for="admin-new-username">Username</label>
+            <input id="admin-new-username" name="admin-new-username" type="text" maxlength="40" required>
+          </div>
+          <div class="form-row">
+            <label for="admin-new-user-password">Starter password</label>
+            <input id="admin-new-user-password" name="admin-new-user-password" type="password" minlength="6" required>
+          </div>
+          <div class="form-row">
+            <label for="admin-new-user-role">Role</label>
+            <select id="admin-new-user-role" name="admin-new-user-role">
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="admin-new-user-group">Group</label>
+            <select id="admin-new-user-group" name="admin-new-user-group">
+              <option value="">Choose a group</option>
+            </select>
+          </div>
+          <div class="button-row">
+            <button type="submit">Create user</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+</html>

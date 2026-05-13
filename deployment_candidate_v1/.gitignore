@@ -1,0 +1,3 @@
+frontend/dist/
+external_backend/__pycache__/
+external_backend/*.pyc

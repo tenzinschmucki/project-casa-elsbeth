@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Casa Elsbeth</title>
+  <script src="config.js"></script>
+  <link rel="stylesheet" href="styles.css?v=2026-05-12-smartphone-v2h">
+</head>
+<body>
+  <header class="page-header">
+    <div class="page-width page-header-inner">
+      <div class="header-copy">
+        <p class="eyebrow">Project Casa Elsbeth</p>
+        <h1 id="page-title">House Booking</h1>
+        <p class="subtitle">
+          A lighter, phone-inspired booking view for calendar browsing, approvals, and day-by-day decisions.
+        </p>
+      </div>
+
+      <div class="header-status">
+        <p id="session-text">Browsing as guest.</p>
+        <p id="mode-text" class="small-text">Trying to connect to the backend.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-width page-main">
+    <noscript>
+      <p class="message-box message-error">
+        This page needs JavaScript to load the calendar and handle the forms.
+      </p>
+    </noscript>
+
+    <section class="toolbar panel">
+      <div class="toolbar-top">
+        <div class="period-heading-block">
+          <p class="toolbar-label">Viewing</p>
+          <div class="period-heading-row">
+            <button id="period-previous-button" type="button" class="secondary-button icon-button period-nav-button" aria-label="Previous period">&#x2039;</button>
+            <h2 id="current-period-label">Loading calendar...</h2>
+            <button id="period-next-button" type="button" class="secondary-button icon-button period-nav-button" aria-label="Next period">&#x203A;</button>
+          </div>
+        </div>
+
+        <div class="toolbar-actions">
+          <div class="view-switch" id="view-switch" aria-label="Calendar view">
+            <button id="month-view-button" type="button" class="toggle-button is-active" data-view="month" aria-pressed="true">Month</button>
+            <button id="year-view-button" type="button" class="toggle-button" data-view="year" aria-pressed="false">Year</button>
+          </div>
+
+          <div class="view-switch hidden" id="display-switch" aria-label="Display mode">
+            <button id="calendar-display-button" type="button" class="toggle-button is-active" data-display-mode="calendar" aria-pressed="true">Calendar</button>
+            <button id="table-display-button" type="button" class="toggle-button" data-display-mode="table" aria-pressed="false">Table</button>
+          </div>
+
+          <a id="admin-page-button" class="secondary-button toolbar-link-button settings-link-button hidden" href="admin.html">Settings</a>
+          <button id="today-button" type="button">Today</button>
+          <button id="logout-button" type="button" class="secondary-button hidden">Log out</button>
+        </div>
+      </div>
+
+      <div class="toolbar-controls">
+        <div class="form-row compact-row" id="area-filter-row">
+          <label for="area-filter">Area</label>
+          <select id="area-filter" name="area-filter">
+            <option value="">All areas</option>
+          </select>
+        </div>
+
+        <div class="form-row compact-row" id="status-filter-row">
+          <label for="status-filter">Status</label>
+          <select id="status-filter" name="status-filter">
+            <option value="">All statuses</option>
+            <option value="requested">Requested</option>
+            <option value="planned">Planned</option>
+            <option value="approved">Approved</option>
+            <option value="completed">Completed</option>
+            <option value="rejected">Rejected</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+
+        <div class="form-row compact-row" id="person-filter-row">
+          <label for="person-filter">Requested by</label>
+          <input id="person-filter" name="person-filter" type="text" placeholder="Filter by username">
+        </div>
+
+        <div class="form-row compact-row hidden" id="table-sort-row">
+          <label for="table-sort">Sort table by</label>
+          <select id="table-sort" name="table-sort">
+            <option value="start_asc">Start time: earliest first</option>
+            <option value="start_desc">Start time: latest first</option>
+            <option value="area_asc">Area</option>
+            <option value="status_asc">Status</option>
+            <option value="requester_asc">Requested by</option>
+          </select>
+        </div>
+
+        <div class="form-row compact-row hidden" id="preview-role-row">
+          <label for="preview-role">Preview as</label>
+          <select id="preview-role" name="preview-role">
+            <option value="current">Current view</option>
+            <option value="member">Member</option>
+            <option value="guest">Guest</option>
+          </select>
+        </div>
+
+        <div class="form-row compact-row hidden" id="preview-group-row">
+          <label for="preview-group">Preview group</label>
+          <select id="preview-group" name="preview-group">
+            <option value="">Choose a group</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <div id="message-box" class="message-box hidden" role="status" aria-live="polite"></div>
+
+    <section id="mobile-app-shell" class="mobile-app-shell hidden" aria-label="Mobile app view">
+      <main id="mobile-screen-root" class="mobile-screen-root" aria-live="polite"></main>
+
+      <nav id="mobile-bottom-nav" class="mobile-bottom-nav" aria-label="Main navigation">
+        <button type="button" class="mobile-nav-button" data-mobile-view="calendar">
+          <span class="mobile-nav-label">Calendar</span>
+        </button>
+        <button type="button" class="mobile-nav-button" data-mobile-view="bookings">
+          <span class="mobile-nav-label">Bookings</span>
+        </button>
+        <button type="button" class="mobile-nav-button" data-mobile-view="create">
+          <span class="mobile-nav-label">Create</span>
+        </button>
+        <button type="button" class="mobile-nav-button" data-mobile-view="approvals">
+          <span class="mobile-nav-label">Approvals</span>
+        </button>
+        <button type="button" class="mobile-nav-button" data-mobile-view="more">
+          <span class="mobile-nav-label">More</span>
+        </button>
+      </nav>
+    </section>
+
+    <div class="calendar-layout">
+      <section class="calendar-main-column">
+        <section class="calendar-shell panel">
+        <section class="weekdays" id="weekdays-strip" aria-label="Weekday labels">
+          <div class="weekdays-row">
+            <span>Mon</span>
+            <span>Tue</span>
+            <span>Wed</span>
+            <span>Thu</span>
+            <span>Fri</span>
+            <span>Sat</span>
+            <span>Sun</span>
+          </div>
+        </section>
+
+        <section id="calendar-periods" class="calendar-periods calendar-periods-month" aria-label="Calendar view">
+          <div class="panel month-panel month-loading">Loading calendar...</div>
+        </section>
+        </section>
+
+        <section class="panel booking-detail-panel hidden" id="booking-detail-panel">
+          <div class="day-panel-header">
+            <div>
+              <p class="toolbar-label">Selected booking</p>
+              <h2 id="selected-booking-title">No booking selected</h2>
+            </div>
+            <span id="selected-booking-status" class="small-text">Select a booking</span>
+          </div>
+
+          <p id="selected-booking-subtitle" class="small-text">
+            Select a booking card or table row to inspect its approval chain and audit trail.
+          </p>
+
+          <div id="selected-booking-summary" class="booking-summary-box">
+            <p class="empty-state">No booking selected yet.</p>
+          </div>
+
+          <div id="selected-booking-cycle" class="booking-cycle-box">
+            <p class="empty-state">Booking lifecycle details will appear here.</p>
+          </div>
+
+          <section class="detail-card">
+            <div class="detail-card-header">
+              <h3>Approval chain</h3>
+            </div>
+            <div id="approval-chain-list" class="audit-list">
+              <p class="empty-state">Approval details will appear here.</p>
+            </div>
+          </section>
+
+          <section class="detail-card">
+            <div class="detail-card-header">
+              <h3>Change log</h3>
+            </div>
+            <div id="booking-audit-list" class="audit-list">
+              <p class="empty-state">Change history will appear here.</p>
+            </div>
+          </section>
+        </section>
+      </section>
+
+      <aside class="details-column">
+        <section class="panel" id="login-panel">
+          <h2>Login</h2>
+          <p class="small-text">
+            Guests can browse the public calendar. Logged-in users work through their own group. Approval-group members can approve requested bookings from other groups.
+          </p>
+          <form id="login-form">
+            <div class="form-row">
+              <label for="username">Username</label>
+              <input id="username" name="username" type="text" required>
+            </div>
+            <div class="form-row">
+              <label for="password">Password</label>
+              <input id="password" name="password" type="password" required>
+            </div>
+            <div class="button-row">
+              <button type="submit">Log in</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel hidden" id="booking-panel">
+          <div class="booking-panel-header">
+            <div>
+              <h2 id="booking-panel-title">Create Booking</h2>
+            </div>
+            <button id="booking-panel-toggle" type="button" class="secondary-button" aria-expanded="false">Show</button>
+          </div>
+          <div id="booking-panel-body" class="hidden">
+            <p id="booking-panel-subtitle" class="small-text">
+              Use the selected date as your anchor, then choose exact times for the booking.
+            </p>
+            <form id="booking-form">
+            <div class="form-row">
+              <label for="booking-status">Starts as</label>
+              <select id="booking-status" name="booking-status" required>
+                <option value="requested">Requested</option>
+                <option value="planned">Planned</option>
+              </select>
+            </div>
+
+            <div class="form-row hidden" id="owner-group-row">
+              <label for="owner-group">Owner group</label>
+              <select id="owner-group" name="owner-group">
+                <option value="">Choose a group</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label>Areas</label>
+              <div id="area-options" class="area-selection-list"></div>
+              <p class="small-text">Choose one or more areas for the same booking.</p>
+            </div>
+
+            <div class="form-row">
+              <label for="booking-title">Name</label>
+              <input
+                id="booking-title"
+                name="booking-title"
+                type="text"
+                maxlength="120"
+                placeholder="Required booking name"
+              >
+            </div>
+
+            <div class="form-row">
+              <label for="start-time">Start date and time</label>
+              <input id="start-time" name="start-time" type="datetime-local" required>
+            </div>
+
+            <div class="form-row">
+              <label for="end-time">End date and time</label>
+              <input id="end-time" name="end-time" type="datetime-local" required>
+            </div>
+
+            <div class="form-row">
+              <label for="note">Short note</label>
+              <textarea
+                id="note"
+                name="note"
+                rows="2"
+                maxlength="200"
+                placeholder="Optional short note (max 200 characters)"
+              ></textarea>
+            </div>
+
+            <p id="booking-warning-text" class="small-text form-warning-text"></p>
+
+            <div class="button-row">
+              <button id="booking-submit-button" type="submit">Create booking</button>
+              <button type="reset" class="secondary-button">Reset</button>
+              <button id="booking-cancel-edit-button" type="button" class="secondary-button hidden">Cancel edit</button>
+            </div>
+            </form>
+          </div>
+        </section>
+
+        <section class="panel day-panel" id="day-panel">
+          <div class="day-panel-header">
+            <div>
+              <p class="toolbar-label">Selected day</p>
+              <h2 id="selected-day-title">Today</h2>
+            </div>
+            <span id="selected-day-count" class="small-text">0 bookings</span>
+          </div>
+
+          <p id="selected-day-subtitle" class="small-text">
+            Pick a day in the calendar to inspect all bookings in detail.
+          </p>
+
+          <div id="selected-day-bookings" class="booking-list">
+            <p class="empty-state">No bookings for this day yet.</p>
+          </div>
+
+          <p id="guest-day-message" class="small-text hidden">
+            Guests only see occupancy on the calendar. Log in to view booking details and states.
+          </p>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    <div class="page-width footer-inner">
+      <p>
+        Built with HTML, CSS, and vanilla JavaScript: dynamic month rendering, API integration, filtering, forms, and DOM updates.
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js?v=2026-05-12-smartphone-v2h"></script>
+  <script src="jquery-enhancements.js?v=2026-05-10-mobile-shell-fix1"></script>
+</body>
+</html>

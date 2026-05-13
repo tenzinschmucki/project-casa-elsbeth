@@ -1,0 +1,3 @@
+[build]
+  command = "node deployment_candidate_v1/build-netlify.mjs"
+  publish = "deployment_candidate_v1/frontend/dist"
