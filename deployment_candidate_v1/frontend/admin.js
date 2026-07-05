@@ -2,7 +2,7 @@
 
 const adminUrlParameters = new URLSearchParams(window.location.search);
 const adminRuntimeConfig = window.APP_CONFIG || {};
-const ADMIN_API_BASE_URL = adminUrlParameters.get("apiBaseUrl") || adminRuntimeConfig.apiBaseUrl || "http://127.0.0.1:8000";
+const ADMIN_API_BASE_URL = adminUrlParameters.get("apiBaseUrl") || adminRuntimeConfig.apiBaseUrl || "http://127.0.0.1:8000/casa-elsbeth";
 const ADMIN_STORAGE_KEY = "projectCasaElsbethToken";
 
 const adminState = {

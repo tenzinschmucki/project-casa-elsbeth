@@ -88,7 +88,7 @@ Netlify should deploy from the GitLab repository, using:
 
 Set:
 
-- `NETLIFY_API_BASE_URL=https://your-render-backend.onrender.com`
+- `NETLIFY_API_BASE_URL=https://api.schmucki.io/casa-elsbeth`
 
 The build script generates `frontend/dist/config.js` from this value.
 
@@ -118,7 +118,7 @@ It uses the same generated `config.js`, so it talks to the same Render API autom
 
 1. Deploy backend on Render first.
 2. Copy the final Render URL.
-3. Set `NETLIFY_API_BASE_URL` on Netlify.
+3. Set `NETLIFY_API_BASE_URL` on Netlify to the backend base path, including `/casa-elsbeth`.
 4. Deploy frontend on Netlify.
 5. Add the Netlify domain to `CORS_ALLOW_ORIGINS` on Render.
 6. Test:
