@@ -2306,9 +2306,8 @@ function getAuditDetailText(entry) {
 }
 
 function getDefaultApiBaseUrl() {
-  if (window.location.protocol === "file:") {
-    return "http://127.0.0.1:8000";
-  }
+  return "https://api.schmucki.io";
+}
 
   return window.location.protocol + "//" + window.location.hostname + ":8000";
 }
