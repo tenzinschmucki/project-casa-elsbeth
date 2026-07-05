@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const rootDir = path.resolve(process.cwd(), "deployment_candidate_v1");
+const rootDir = path.resolve(process.cwd();
 const sourceDir = path.join(rootDir, "frontend");
 const outputDir = path.join(sourceDir, "dist");
 const apiBaseUrl = (process.env.NETLIFY_API_BASE_URL || "").trim();
