@@ -3841,10 +3841,10 @@ function getAuditDetailText(entry) {
 
 function getDefaultApiBaseUrl() {
   if (window.location.protocol === "file:") {
-    return "http://127.0.0.1:8000/casa-elsbeth";
+    return "http://127.0.0.1:8000";
   }
 
-  return window.location.protocol + "//" + window.location.hostname + ":8000/casa-elsbeth";
+  return window.location.protocol + "//" + window.location.hostname + ":8000";
 }
 
 function shouldRedirectFromLocalFile() {
